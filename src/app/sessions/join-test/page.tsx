@@ -2,13 +2,16 @@
 import { useEffect, useState } from "react";
 import { Room, RoomEvent, createLocalTracks } from "livekit-client";
 
-export default function Join({ params }: { params: { id: string } }) {
+// This static page is a workaround for dynamic route type issues.
+// Replace 'test-session-id' with the actual sessionId as needed.
+export default function JoinTest() {
+  const sessionId = "test-session-id";
   const [connected, setConnected] = useState(false);
   useEffect(() => {
     (async () => {
       const res = await fetch("/api/video-token", {
         method: "POST",
-        body: JSON.stringify({ room: params.id, identity: "me" })
+        body: JSON.stringify({ room: sessionId, identity: "me" })
       });
       const { token } = await res.json();
       const room = new Room();
@@ -18,7 +21,7 @@ export default function Join({ params }: { params: { id: string } }) {
       room.on(RoomEvent.Disconnected, () => setConnected(false));
       setConnected(true);
     })();
-  }, [params.id]);
+  }, [sessionId]);
 
   return <main className="p-6">{connected ? "Connected" : "Joining..."}</main>;
 }

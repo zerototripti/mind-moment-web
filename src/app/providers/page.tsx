@@ -1,12 +1,25 @@
+"use client";
 
 import { getProviders } from "@/lib/provider-data";
 import { useState, useTransition, useEffect } from "react";
+interface Provider {
+  id: string;
+  name: string;
+  price: number;
+  category?: string;
+  languages: string[];
+  profile?: {
+    id: string;
+    avatar_url?: string;
+    bio?: string;
+  };
+}
 
 export default function ProvidersPage() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [providers, setProviders] = useState<any[]>([]);
+  const [providers, setProviders] = useState<Provider[]>([]);
   const [isPending, startTransition] = useTransition();
   const [allLanguages, setAllLanguages] = useState<string[]>([]);
 
@@ -19,12 +32,17 @@ export default function ProvidersPage() {
         maxPrice: maxPrice ? Number(maxPrice) : undefined,
       })
         .then((data) => {
-          setProviders(data || []);
+          // Map profile from array to object if needed
+          const mapped: Provider[] = (data || []).map((p) => ({
+            ...p,
+            profile: Array.isArray(p.profile) ? p.profile[0] : p.profile,
+          }));
+          setProviders(mapped);
           // Collect all unique languages from results
           setAllLanguages(
             Array.from(
               new Set(
-                (data || []).flatMap((p: any) => p.languages || [])
+                mapped.flatMap((p) => p.languages || [])
               )
             )
           );
