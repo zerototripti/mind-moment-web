@@ -1,379 +1,135 @@
-import Image from "next/image";
-import Link from "next/link";
 
-const SEGMENTS = [
-  {
-    title: "Family Support",
-    desc: "Navigate intergenerational expectations and communication.",
-    icon: "users",
-  },
-  {
-    title: "Couples & Relationships",
-    desc: "Support for healthy communication and connection.",
-    icon: "heart",
-  },
-  {
-    title: "Students & Early Career",
-    desc: "Guidance for academic, career, and life transitions.",
-    icon: "graduation-cap",
-  },
-  {
-    title: "Newcomer & Immigration",
-    desc: "Adjust to life in Canada with culturally aware guidance.",
-    icon: "globe",
-  },
-  {
-    title: "Women’s Well-Being",
-    desc: "Space for women’s unique experiences and needs.",
-    icon: "venus",
-  },
-  {
-    title: "Men’s Well-Being",
-    desc: "Support for men’s mental and emotional health.",
-    icon: "mars",
-  },
-  {
-    title: "Mind–Body Practices",
-    desc: "Breathwork, routine, and gentle lifestyle strategies.",
-    icon: "leaf",
-  },
-  {
-    title: "Faith-integrated (optional)",
-    desc: "Incorporate faith and spirituality if you choose.",
-    icon: "hands",
-  },
+import Link from "next/link";
+import Image from "next/image";
+import Header from "../components/Header";
+import SiteFooter from "../components/SiteFooter";
+import CrisisBanner from "../components/CrisisBanner";
+
+const segments = [
+  { name: "Family Support", icon: "👨‍👩‍👧‍👦", desc: "Guidance for family harmony and connection.", query: "family" },
+  { name: "Couples & Relationships", icon: "💞", desc: "Support for couples and relationship growth.", query: "couples" },
+  { name: "Students & Early Career", icon: "🎓", desc: "Navigate school, work, and life transitions.", query: "students" },
+  { name: "Newcomer & Immigration", icon: "🛬", desc: "Adjusting to life in Canada as a newcomer.", query: "newcomer" },
+  { name: "Women’s Well-Being", icon: "🌸", desc: "Empowering women’s wellness journeys.", query: "women" },
+  { name: "Men’s Well-Being", icon: "🧑‍💼", desc: "Resources for men’s personal growth.", query: "men" },
+  { name: "Mind–Body Practices", icon: "🧘‍♂️", desc: "Explore mindfulness and holistic practices.", query: "mindbody" },
+  { name: "Faith-integrated (optional)", icon: "🕌", desc: "Support that respects your faith and values.", query: "faith" },
 ];
 
-export default function Home() {
+
+export default function HomePage() {
   return (
-    <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
-      {/* Crisis & Disclaimer Strip */}
-      <div
-        style={{
-          background: "var(--cloud)",
-          borderBottom: "1px solid var(--border)",
-          padding: "8px 0",
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 900,
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            gap: 4,
-            alignItems: "center",
-            fontSize: 14,
-          }}
-        >
-          <span
-            style={{
-              color: "var(--accent)",
-              fontWeight: 600,
-            }}
-          >
-            In an emergency call 911. Crisis support: Talk Suicide Canada
-            1-833-456-4566 / text 45645.
-          </span>
-          <span
-            style={{
-              background: "var(--brand-2)",
-              color: "var(--ink)",
-              borderRadius: 12,
-              padding: "2px 10px",
-              fontSize: 13,
-              marginTop: 2,
-            }}
-          >
-            Providers are not regulated health professionals in Canada.
-          </span>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section className="bg-hero-gradient flex flex-col items-center justify-center py-20 px-4">
-        <div className="max-w-2xl w-full text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4 font-sans">
-            Culturally aware wellness conversations for South Asians in Canada.
-          </h1>
-          <p className="text-lg md:text-xl text-ink mb-8 font-sans">
-            India-trained support providers offering guided conversations and practical strategies. Not a medical or crisis service.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center mb-10">
-            <a
-              href="#directory"
-              className="bg-primary text-white rounded-full px-8 py-4 font-semibold text-lg shadow-md hover:bg-primary-dark transition min-w-[200px]"
-            >
-              Find a Support Provider
-            </a>
-            <a
-              href="#how"
-              className="bg-surface text-primary border-2 border-primary rounded-full px-8 py-4 font-semibold text-lg hover:bg-primary-light hover:text-primary-dark transition min-w-[160px]"
-            >
-              How it works
-            </a>
+    <>
+      <Header />
+      <main>
+        {/* Only one CrisisBanner at the top, remove any duplicate in layout or parent */}
+        {/* Hero Section */}
+        <section className="w-full min-h-[60vh] flex flex-col justify-center items-center relative bg-sand rounded-none overflow-hidden">
+          <Image
+            src="/assets/mind-moment-hero.png"
+            alt="South Asian family and friends in conversation, Mind Moment hero background"
+            fill
+            className="absolute inset-0 w-full h-full object-cover opacity-80"
+            priority
+          />
+          <div className="relative z-10 flex flex-col items-center justify-center py-16 md:py-24 px-4 max-w-2xl text-center">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-anchor drop-shadow-sm mb-4">
+              Culturally aware wellness conversations for South Asians in Canada.
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-ink bg-sand/80 rounded-lg px-4 py-2 mb-6 shadow-sm">
+              India-trained support providers offering guided conversations and practical strategies. Not a medical or crisis service.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full max-w-xs mx-auto">
+              <Link href="/providers" className="btn bg-anchor text-sand text-lg px-6 py-3 min-h-[44px] min-w-[44px]" aria-label="Find a Support Provider">
+                Find a Support Provider
+              </Link>
+              <Link href="#how-it-works" className="btn bg-sand text-anchor border border-anchor text-lg px-6 py-3 min-h-[44px] min-w-[44px]" aria-label="Learn how Mind Moment works">
+                How it works
+              </Link>
+            </div>
           </div>
-          {/* Hero Illustration */}
-          <div className="flex justify-center mt-8">
+        </section>
+
+        {/* Split Section */}
+        <section className="w-full flex flex-col md:flex-row items-center gap-8 py-16 max-w-5xl mx-auto px-4">
+          <div className="w-full md:w-1/2 flex justify-center">
             <Image
-              src="/globe.svg"
-              alt="South Asian community"
-              width={220}
-              height={160}
-              className="rounded-2xl bg-accent-light shadow-lg"
-              priority
+              src="/assets/mind-moment-paragraph.png"
+              alt="Gentle abstract illustration beside paragraph about culturally aware support"
+              width={400}
+              height={320}
+              className="rounded-[16px] shadow-md object-cover"
+              priority={false}
             />
           </div>
-        </div>
-      </section>
+          <div className="w-full md:w-1/2 text-lg text-ink dark:text-sand">
+            <h2 className="text-2xl font-semibold mb-3 text-anchor">What is Mind Moment?</h2>
+            <p>
+              Mind Moment is a safe, welcoming space for South Asians in Canada to find culturally aware support for everyday life. Our platform connects you with providers who understand your background and values—no diagnosis, no labels, just real conversations and practical guidance.
+            </p>
+          </div>
+        </section>
 
-      {/* Segments Grid */}
-      <section
-        id="directory"
-        style={{
-          maxWidth: 1000,
-          margin: "0 auto",
-          padding: "32px 16px 0 16px",
-        }}
-      >
-        <h2
-          style={{
-            color: "var(--brand)",
-            fontWeight: 600,
-            fontSize: 24,
-            marginBottom: 24,
-            textAlign: "center",
-          }}
-        >
-          Areas of Support
-        </h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: 24,
-          }}
-        >
-          {SEGMENTS.map((seg) => (
-            <div
-              key={seg.title}
-              style={{
-                background: "var(--brand-2)",
-                borderRadius: 16,
-                padding: 24,
-                boxShadow: "0 1px 6px 0 rgba(15,76,92,0.04)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                minHeight: 140,
-              }}
-            >
-              {/* Replace with Lucide icons in production */}
-              <div
-                style={{
-                  background: "var(--brand)",
-                  borderRadius: 8,
-                  width: 36,
-                  height: 36,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: 12,
-                }}
-              >
-                <span
-                  style={{
-                    color: "#fff",
-                    fontSize: 22,
-                  }}
+        {/* Features (Segments) */}
+        <section className="w-full bg-sand py-12 px-4">
+          <h2 className="text-2xl font-bold text-anchor text-center mb-8">Explore Support Segments</h2>
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {segments.map((seg) => (
+              <div key={seg.name} className="card flex flex-col items-center p-6 rounded-[16px] bg-white dark:bg-ink shadow-md">
+                <span className="text-4xl mb-2" aria-hidden="true">{seg.icon}</span>
+                <h3 className="text-lg font-semibold text-anchor mb-1 text-center">{seg.name}</h3>
+                <p className="text-sm text-ink dark:text-sand text-center mb-4">{seg.desc}</p>
+                <Link
+                  href={`/providers?segment=${encodeURIComponent(seg.query)}`}
+                  className="btn bg-anchor text-sand w-full mt-auto min-h-[44px] min-w-[44px]"
                 >
-                  &#9679;
-                </span>
+                  Find Providers
+                </Link>
               </div>
-              <div
-                style={{
-                  fontWeight: 600,
-                  color: "var(--brand)",
-                  marginBottom: 6,
-                }}
-              >
-                {seg.title}
-              </div>
-              <div
-                style={{
-                  color: "var(--ink)",
-                  fontSize: 15,
-                }}
-              >
-                {seg.desc}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section
-        id="how"
-        style={{
-          maxWidth: 800,
-          margin: "48px auto 0 auto",
-          padding: "0 16px",
-        }}
-      >
-        <h2
-          style={{
-            color: "var(--brand)",
-            fontWeight: 600,
-            fontSize: 24,
-            marginBottom: 24,
-            textAlign: "center",
-          }}
-        >
-          How it works
-        </h2>
-        <ol
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 24,
-            fontSize: 17,
-            color: "var(--ink)",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
-          <li
-            style={{
-              background: "var(--surface)",
-              borderRadius: 14,
-              padding: 20,
-              boxShadow: "0 1px 6px 0 rgba(15,76,92,0.04)",
-            }}
-          >
-            <b>1.</b> Browse providers by language, culture, and schedule
-          </li>
-          <li
-            style={{
-              background: "var(--surface)",
-              borderRadius: 14,
-              padding: 20,
-              boxShadow: "0 1px 6px 0 rgba(15,76,92,0.04)",
-            }}
-          >
-            <b>2.</b> Book a time and pay securely in CAD
-          </li>
-          <li
-            style={{
-              background: "var(--surface)",
-              borderRadius: 14,
-              padding: 20,
-              boxShadow: "0 1px 6px 0 rgba(15,76,92,0.04)",
-            }}
-          >
-            <b>3.</b> Join a private video room at your slot
-            <div
-              style={{
-                fontSize: 13,
-                color: "var(--muted)",
-                marginTop: 6,
-              }}
-            >
-              Conversations are guidance-focused; not clinical care.
-            </div>
-          </li>
-        </ol>
-      </section>
-
-      {/* Footer */}
-      <footer
-        style={{
-          background: "var(--cloud)",
-          marginTop: 56,
-          padding: "32px 0 16px 0",
-          borderTop: "1px solid var(--border)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 900,
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 16,
-          }}
-        >
-          <nav
-            style={{
-              display: "flex",
-              gap: 20,
-              flexWrap: "wrap",
-              justifyContent: "center",
-              fontSize: 15,
-            }}
-          >
-            <Link href="/about">About</Link>
-            <Link href="/faq">FAQ</Link>
-            <Link href="/providers">Provider Signup</Link>
-            <Link href="/pricing">Pricing</Link>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/contact">Contact</Link>
-          </nav>
-          <div
-            style={{
-              background: "var(--brand-2)",
-              color: "var(--ink)",
-              borderRadius: 12,
-              padding: "2px 10px",
-              fontSize: 13,
-            }}
-          >
-            Providers are not regulated health professionals in Canada.
+            ))}
           </div>
-          <form
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              marginTop: 8,
-            }}
-          >
-            <input
-              type="checkbox"
-              id="optin"
-              style={{
-                accentColor: "var(--brand)",
-                width: 18,
-                height: 18,
-              }}
-            />
-            <label
-              htmlFor="optin"
-              style={{
-                fontSize: 14,
-                color: "var(--muted)",
-              }}
-            >
-              Email me respectful updates (never spammy)
-            </label>
-          </form>
-          <div
-            style={{
-              color: "var(--muted)",
-              fontSize: 13,
-              marginTop: 8,
-            }}
-          >
-            &copy; {new Date().getFullYear()} Mind Moment. All rights reserved.
+        </section>
+
+        {/* How it Works */}
+        <section id="how-it-works" className="w-full py-16 px-4 bg-white dark:bg-ink">
+          <h2 className="text-2xl font-bold text-anchor text-center mb-8">How it works</h2>
+          <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 max-w-4xl mx-auto">
+            <div className="card flex-1 flex flex-col items-center p-6 rounded-[16px] bg-sand dark:bg-ink shadow-md">
+              <span className="text-3xl mb-2">🔎</span>
+              <h3 className="font-semibold text-lg mb-1">Browse</h3>
+              <p className="text-sm text-center">Explore provider profiles and find the right fit for your needs and preferences.</p>
+            </div>
+            <div className="card flex-1 flex flex-col items-center p-6 rounded-[16px] bg-sand dark:bg-ink shadow-md">
+              <span className="text-3xl mb-2">📅</span>
+              <h3 className="font-semibold text-lg mb-1">Book & Pay</h3>
+              <p className="text-sm text-center">Book a session and pay securely online—no referrals or paperwork needed.</p>
+            </div>
+            <div className="card flex-1 flex flex-col items-center p-6 rounded-[16px] bg-sand dark:bg-ink shadow-md">
+              <span className="text-3xl mb-2">🎥</span>
+              <h3 className="font-semibold text-lg mb-1">Private Video Session</h3>
+              <p className="text-sm text-center">Connect privately and securely with your provider in a video session at your convenience.</p>
+            </div>
           </div>
-        </div>
-      </footer>
-    </main>
+        </section>
+
+        {/* Testimonials (Provider Highlights) */}
+        <section className="w-full py-16 px-4 bg-sand">
+          <h2 className="text-2xl font-bold text-anchor text-center mb-8">Meet Some of Our Providers</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="card flex flex-col items-center p-6 rounded-[16px] bg-white dark:bg-ink shadow-md">
+                <div className="w-20 h-20 bg-sage flex items-center justify-center rounded-full mb-4">
+                  <span className="text-4xl" aria-hidden="true">🧑‍💼</span>
+                </div>
+                <h3 className="font-semibold text-lg mb-1 text-anchor">Provider {n}</h3>
+                <p className="text-sm text-ink dark:text-sand text-center">Experienced, culturally aware, and here to listen. No diagnosis or medical advice—just support for your journey.</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+  <SiteFooter />
+  {/* Only one SiteFooter (with disclaimer) at the bottom, remove any duplicate in layout or parent */}
+    </>
   );
 }
